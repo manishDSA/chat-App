@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chat-App</title>
+</head>
+<body>
+    <h1>chatting</h1>
+    <input type="text" placeholder="Enter message" id="message">
+    <button id="sendbtn">Send</button>
+    <div id="messages"></div>
+    <!-- it is load the script in frontend -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+//    create a new socket
+const socket= io();
+
+const intputField= document.getElementById('message')
+const sendbtn= document.getElementById('sendbtn')
+const messagesDiv= document.getElementById('messages')
+socket.on("message",message=>{
+//create a p tag
+const p= document.createElement('p');
+p.innerText=message
+messagesDiv.appendChild(p);
+}
+)
+//    send message to server
+sendbtn.addEventListener('click',()=>{
+    //catch the message
+    const message= intputField.value;
+    console.log(message);
+    socket.emit('client messsage',message)
+    
+})
+    </script>
+
+</body>
+</html>
